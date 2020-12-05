@@ -1,14 +1,20 @@
 package com.joseludev.locatia.application.newLocation;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.adapters.TextViewBindingAdapter;
@@ -19,6 +25,8 @@ import com.joseludev.locatia.domain.location.LocationManager;
 
 
 public class NewLocationActivity extends AppCompatActivity implements LocationListener {
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private NewLocationViewModel newLocationViewModel;
 
@@ -95,9 +103,39 @@ public class NewLocationActivity extends AppCompatActivity implements LocationLi
         });
     }
 
+    public void onCategoryAddButtonClicked(View view) {
+
+    }
+
+    public void onTakePictureButtonClicked(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+    }
+
+    public void onCheckButtonClicked(View view) {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ImageView imageView = findViewById(R.id.imageView);
+            imageView.setImageBitmap(imageBitmap);
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        LocationManager.onRequestedLocationPermissionsResult(requestCode, this, this);
+        switch (requestCode) {
+            case LocationManager.REQUEST_CODE_LOCATION:
+                LocationManager.onRequestedLocationPermissionsResult(requestCode, this, this);
+                break;
+            case 1:
+                break;
+        }
     }
 
     @Override

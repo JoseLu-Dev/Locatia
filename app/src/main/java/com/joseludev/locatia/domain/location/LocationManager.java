@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat;
 
 public class LocationManager {
 
+    public static final int REQUEST_CODE_LOCATION = 0;
+
     private static android.location.LocationManager locationManager;
 
     public static void getLocationCurrent(Activity activity, LocationListener locationListener) {
@@ -30,30 +32,29 @@ public class LocationManager {
             // The registered ActivityResultCallback gets the result of this request.
             activity.requestPermissions(
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    0);
+                    REQUEST_CODE_LOCATION);
         }
     }
 
     public static void onRequestedLocationPermissionsResult(int requestCode, Activity activity, LocationListener locationListener) {
-        switch (requestCode) {
-            case 0:
 
-                if (ContextCompat.checkSelfPermission(
-                        activity, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                        PackageManager.PERMISSION_GRANTED) {
 
-                    locationManager = (android.location.LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
-                    locationManager.requestSingleUpdate(android.location.LocationManager.GPS_PROVIDER, locationListener, null);
+        if (ContextCompat.checkSelfPermission(
+                activity, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) {
 
-                } else {
-                    // Explain to the user that the feature is unavailable because
-                    // the features requires a permission that the user has denied.
-                    // At the same time, respect the user's decision. Don't link to
-                    // system settings in an effort to convince the user to change
-                    // their decision.
-                    locationListener.onProviderDisabled("");
-                }
+            locationManager = (android.location.LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestSingleUpdate(android.location.LocationManager.GPS_PROVIDER, locationListener, null);
+
+        } else {
+            // Explain to the user that the feature is unavailable because
+            // the features requires a permission that the user has denied.
+            // At the same time, respect the user's decision. Don't link to
+            // system settings in an effort to convince the user to change
+            // their decision.
+            locationListener.onProviderDisabled("");
         }
+
     }
 
 }

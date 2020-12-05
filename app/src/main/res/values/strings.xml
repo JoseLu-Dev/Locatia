@@ -12,6 +12,4 @@
     <string name="add_location_image">add location image</string>
     <string name="location_image">location image</string>
     <string name="category">Category:</string>
-
-    <string name="decimalFormatting">%3.4f</string>
 </resources>
