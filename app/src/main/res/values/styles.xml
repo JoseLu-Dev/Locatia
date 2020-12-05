@@ -2,8 +2,8 @@
 <resources>
 
     <style name="textViewStyle">
-        <item name="android:textColor">@color/orangePrimary</item>
         <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
 
     </style>
 </resources>
