@@ -14,7 +14,7 @@ public class NewLocationActvity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_location_actvity);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("New location");
+        myToolbar.setTitle(getString(R.string.new_location));
         setSupportActionBar(myToolbar);
     }
 }
