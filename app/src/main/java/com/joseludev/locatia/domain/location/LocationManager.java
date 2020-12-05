@@ -15,6 +15,7 @@ public class LocationManager {
 
     private static android.location.LocationManager locationManager;
 
+
     public static void getLocationCurrent(Activity activity, LocationListener locationListener) {
         if (ContextCompat.checkSelfPermission(
                 activity, Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -36,9 +37,7 @@ public class LocationManager {
         }
     }
 
-    public static void onRequestedLocationPermissionsResult(int requestCode, Activity activity, LocationListener locationListener) {
-
-
+    public static void onRequestedLocationPermissionsResult(Activity activity, LocationListener locationListener) {
         if (ContextCompat.checkSelfPermission(
                 activity, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {

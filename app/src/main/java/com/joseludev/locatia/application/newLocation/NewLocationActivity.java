@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.databinding.adapters.TextViewBindingAdapter;
 import androidx.lifecycle.Observer;
 
 import com.joseludev.locatia.R;
@@ -131,7 +130,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationLi
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case LocationManager.REQUEST_CODE_LOCATION:
-                LocationManager.onRequestedLocationPermissionsResult(requestCode, this, this);
+                LocationManager.onRequestedLocationPermissionsResult(this, this);
                 break;
             case 1:
                 break;
