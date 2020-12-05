@@ -1,4 +1,4 @@
-package com.example.locatia.domain.models;
+package com.joseludev.locatia.domain.models;
 
 public class Category {
 

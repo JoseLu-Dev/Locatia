@@ -1,10 +1,10 @@
-package com.example.locatia.application;
+package com.joseludev.locatia.application.location;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.locatia.R;
+import com.joseludev.locatia.R;
 
 public class LocationActivity extends AppCompatActivity {
 

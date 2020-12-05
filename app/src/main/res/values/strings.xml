@@ -2,4 +2,11 @@
     <string name="app_name">Locatia</string>
     <string name="add_location">add location</string>
     <string name="new_location">New location</string>
+    <string name="coordinate_hint">+/-0.000</string>
+    <string name="longitude">Longitude</string>
+    <string name="location_coordinates">Location coordinates:</string>
+    <string name="new_location_info">New location Info</string>
+    <string name="name">Name:</string>
+    <string name="latitude">Latitude:</string>
+    <string name="description">Description</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.locatia;
+package com.joseludev.locatia;
 
 import android.content.Context;
 
