@@ -23,7 +23,7 @@ import com.joseludev.locatia.R;
 import com.joseludev.locatia.domain.location.LocationManager;
 
 
-public class NewLocationActivity extends AppCompatActivity implements LocationListener {
+public class NewLocationActivity extends AppCompatActivity implements LocationManager.LocationManagerHandler {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -138,22 +138,12 @@ public class NewLocationActivity extends AppCompatActivity implements LocationLi
     }
 
     @Override
-    public void onLocationChanged(@NonNull Location location) {
+    public void onLocationChanged(Location location) {
         newLocationViewModel.setLocation(location);
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
+    public void onLocationPermissionDenied() {
 
     }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-
-    }
-
 }
