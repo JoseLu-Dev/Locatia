@@ -144,7 +144,17 @@ public class NewLocationActivity extends AppCompatActivity implements LocationLi
     }
 
     @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
     public void onProviderDisabled(@NonNull String provider) {
 
     }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+
+    }
+
 }
