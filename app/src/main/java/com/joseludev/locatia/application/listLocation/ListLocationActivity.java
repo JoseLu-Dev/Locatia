@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.joseludev.locatia.R;
+import com.joseludev.locatia.application.newLocation.NewLocationActivity;
 
 public class ListLocationActivity extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class ListLocationActivity extends AppCompatActivity {
     }
 
     public void toNewLocationActivity(View view) {
-        Intent newLocationActivity = new Intent(this, com.joseludev.locatia.application.newLocation.newLocationActivity.class);
+        Intent newLocationActivity = new Intent(this, NewLocationActivity.class);
         startActivity(newLocationActivity);
     }
 }

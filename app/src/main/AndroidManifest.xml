@@ -2,11 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.joseludev.locatia">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Locatia">
-        <activity android:name="com.joseludev.locatia.application.newLocation.newLocationActivity" />
+        <activity android:name="com.joseludev.locatia.application.newLocation.NewLocationActivity" />
         <activity android:name="com.joseludev.locatia.application.location.LocationActivity" />
         <activity android:name="com.joseludev.locatia.application.listLocation.ListLocationActivity">
             <intent-filter>
@@ -25,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
