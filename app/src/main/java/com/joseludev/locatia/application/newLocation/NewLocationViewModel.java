@@ -14,6 +14,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.joseludev.locatia.BuildConfig;
+import com.joseludev.locatia.domain.models.CategoryModel;
+import com.joseludev.locatia.domain.models.LocationModel;
 import com.joseludev.locatia.domain.storage.StorageManager;
 
 import java.io.File;
@@ -124,5 +126,13 @@ public class NewLocationViewModel extends AndroidViewModel {
         latitude.setValue(location.getLatitude());
         longitude.setValue(location.getLongitude());
         locationSetted = true;
+    }
+
+    public void saveLocationOnDatabase() {
+        LocationModel locationModel = getLocationItem();
+    }
+
+    public LocationModel getLocationItem() {
+        return new LocationModel(latitude.getValue(), longitude.getValue(), name, description, photoPath, null);
     }
 }

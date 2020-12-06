@@ -11,6 +11,7 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import androidx.lifecycle.Observer;
 
 import com.joseludev.locatia.R;
 import com.joseludev.locatia.domain.location.LocationManager;
+import com.joseludev.locatia.domain.models.LocationModel;
 
 import java.io.File;
 
@@ -121,7 +123,8 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     public void onCheckButtonClicked(View view) {
         String information = newLocationViewModel.informationValid();
         if (information.equals(NewLocationViewModel.INFORMATION_VALID)) {
-            //TODO intent back
+            newLocationViewModel.saveLocationOnDatabase();
+            finish();
         } else {
             Toast.makeText(this, information, Toast.LENGTH_SHORT).show();
         }
