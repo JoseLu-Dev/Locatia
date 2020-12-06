@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,13 +24,15 @@ import androidx.lifecycle.Observer;
 import com.joseludev.locatia.R;
 import com.joseludev.locatia.domain.location.LocationManager;
 
+import java.io.File;
+
+import static com.joseludev.locatia.application.newLocation.NewLocationViewModel.REQUEST_TAKE_PHOTO;
+
 
 public class NewLocationActivity extends AppCompatActivity implements LocationManager.LocationManagerHandler {
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
     private NewLocationViewModel newLocationViewModel;
-
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,8 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
         newLocationViewModel = new NewLocationViewModel(this.getApplication());
 
         LocationManager.getLocationCurrent(this, this);
+
+        imageView = findViewById(R.id.imageView);
 
         setObservers();
         setOnTextChangedListeners();
@@ -107,8 +113,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     }
 
     public void onTakePictureButtonClicked(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        newLocationViewModel.takePicture(this);
     }
 
     public void onCheckButtonClicked(View view) {
@@ -118,11 +123,14 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView imageView = findViewById(R.id.imageView);
-            imageView.setImageBitmap(imageBitmap);
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            File f = new File(newLocationViewModel.photoPath);
+            Uri contentUri = Uri.fromFile(f);
+            mediaScanIntent.setData(contentUri);
+            this.sendBroadcast(mediaScanIntent);
+            imageView.setImageURI(contentUri);
+            //TODO move to viewmodel
         }
     }
 
