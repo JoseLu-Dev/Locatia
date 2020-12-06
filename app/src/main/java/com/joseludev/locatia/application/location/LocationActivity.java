@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import com.joseludev.locatia.R;
 
+import java.io.BufferedReader;
+
 public class LocationActivity extends AppCompatActivity {
 
     @Override
