@@ -1,9 +1,36 @@
 package com.joseludev.locatia.domain.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "location_table")
 public class LocationModel {
 
-    private double latitude, longitude;
-    private String name, description, photoPath;
+    @NonNull
+    @ColumnInfo(name = "latitude")
+    private double latitude;
+
+    @NonNull
+    @ColumnInfo(name = "longitude")
+    private double longitude;
+
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "name")
+    private String name;
+
+    @NonNull
+    @ColumnInfo(name = "description")
+    private String description;
+
+    @NonNull
+    @ColumnInfo(name = "photoPath")
+    private String photoPath;
+
+
+    @ColumnInfo(name = "category")
     private CategoryModel categoryModel;
 
     public LocationModel(double latitude, double longitude, String name, String description, String photoPath, CategoryModel categoryModel) {
@@ -13,18 +40,6 @@ public class LocationModel {
         this.description = description;
         this.photoPath = photoPath;
         this.categoryModel = categoryModel;
-    }
-
-    @Override
-    public String toString() {
-        return "LocationModel{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", photoPath='" + photoPath + '\'' +
-                ", categoryModel=" + categoryModel +
-                '}';
     }
 
     public double getLatitude() {

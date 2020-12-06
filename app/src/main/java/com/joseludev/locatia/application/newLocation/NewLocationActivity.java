@@ -123,7 +123,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     public void onCheckButtonClicked(View view) {
         String information = newLocationViewModel.informationValid();
         if (information.equals(NewLocationViewModel.INFORMATION_VALID)) {
-            newLocationViewModel.saveLocationOnDatabase();
+            newLocationViewModel.saveLocationOnDatabase(this.getApplication());
             finish();
         } else {
             Toast.makeText(this, information, Toast.LENGTH_SHORT).show();

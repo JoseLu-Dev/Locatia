@@ -14,7 +14,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.joseludev.locatia.BuildConfig;
+import com.joseludev.locatia.domain.database.LocationRoomDatabase;
 import com.joseludev.locatia.domain.models.CategoryModel;
+import com.joseludev.locatia.domain.models.LocationDao;
 import com.joseludev.locatia.domain.models.LocationModel;
 import com.joseludev.locatia.domain.storage.StorageManager;
 
@@ -128,11 +130,16 @@ public class NewLocationViewModel extends AndroidViewModel {
         locationSetted = true;
     }
 
-    public void saveLocationOnDatabase() {
-        LocationModel locationModel = getLocationItem();
-    }
-
     public LocationModel getLocationItem() {
         return new LocationModel(latitude.getValue(), longitude.getValue(), name, description, photoPath, null);
+    }
+
+    public void saveLocationOnDatabase(Application application) {
+        LocationModel locationModel = getLocationItem();
+        LocationRoomDatabase db = LocationRoomDatabase.getDatabase(application);
+        LocationDao locationDao = db.locationDao();
+        LocationRoomDatabase.getDatabaseWriteExecutor().execute(() ->{
+            locationDao.insert(locationModel);
+        });
     }
 }
