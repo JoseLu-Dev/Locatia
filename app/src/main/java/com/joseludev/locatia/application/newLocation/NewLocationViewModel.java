@@ -22,11 +22,18 @@ import java.io.IOException;
 
 public class NewLocationViewModel extends AndroidViewModel {
 
+    static final String INFORMATION_VALID = "Valid",
+            INFORMATION_MISSING_NAME = "Missing name",
+            INFORMATION_MISSING_DESCRIPTION = "Missing description",
+            INFORMATION_MISSING_PHOTO = "Missing photo",
+            INFORMATION_MISSING_COORDINATES = "Missing coordinates";
+
     static final int REQUEST_TAKE_PHOTO = 1;
 
+    private boolean locationSetted = false;
     private MutableLiveData<Double> latitude = new MutableLiveData<>(), longitude = new MutableLiveData<>();
     private String name, description;
-    String photoPath;
+    private String photoPath;
     //private Category category; //TODO implement category
 
     public NewLocationViewModel(@NonNull Application application) {
@@ -65,11 +72,6 @@ public class NewLocationViewModel extends AndroidViewModel {
         this.description = description;
     }
 
-    public void setLocation(Location location) {
-        latitude.setValue(location.getLatitude());
-        longitude.setValue(location.getLongitude());
-    }
-
     public void takePicture(Activity activity) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -90,7 +92,37 @@ public class NewLocationViewModel extends AndroidViewModel {
                     photoFile);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             activity.startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-
         }
+    }
+
+    public String informationValid() {
+        if (name == null || name.length() == 0) {
+            return NewLocationViewModel.INFORMATION_MISSING_NAME;
+        } else if (description == null || description.length() == 0) {
+            return NewLocationViewModel.INFORMATION_MISSING_DESCRIPTION;
+        } else if (photoPath == null || photoPath.length() == 0) {
+            return NewLocationViewModel.INFORMATION_MISSING_PHOTO;
+        } else if (!locationSetted) {
+            return NewLocationViewModel.INFORMATION_MISSING_COORDINATES;
+        }
+        return NewLocationViewModel.INFORMATION_VALID;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        if (photoPath == null) {
+            File photo = new File(this.photoPath);
+            photo.delete();
+        }
+        this.photoPath = photoPath;
+    }
+
+    public void setLocation(Location location) {
+        latitude.setValue(location.getLatitude());
+        longitude.setValue(location.getLongitude());
+        locationSetted = true;
     }
 }

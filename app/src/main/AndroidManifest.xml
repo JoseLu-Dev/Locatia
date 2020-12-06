@@ -18,9 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Locatia">
-        <activity android:name="com.joseludev.locatia.application.newLocation.NewLocationActivity" />
-        <activity android:name="com.joseludev.locatia.application.location.LocationActivity" />
-        <activity android:name="com.joseludev.locatia.application.listLocation.ListLocationActivity">
+        <activity
+            android:name="com.joseludev.locatia.application.newLocation.NewLocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.joseludev.locatia.application.location.LocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.joseludev.locatia.application.listLocation.ListLocationActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

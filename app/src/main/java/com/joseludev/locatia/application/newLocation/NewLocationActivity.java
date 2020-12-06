@@ -2,6 +2,7 @@ package com.joseludev.locatia.application.newLocation;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +40,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_location_activity);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         myToolbar.setTitle(getString(R.string.new_location));
         setSupportActionBar(myToolbar);
 
@@ -117,20 +119,25 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     }
 
     public void onCheckButtonClicked(View view) {
-
+        String information = newLocationViewModel.informationValid();
+        if (information.equals(NewLocationViewModel.INFORMATION_VALID)) {
+            //TODO intent back
+        } else {
+            Toast.makeText(this, information, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            File f = new File(newLocationViewModel.photoPath);
-            Uri contentUri = Uri.fromFile(f);
-            mediaScanIntent.setData(contentUri);
-            this.sendBroadcast(mediaScanIntent);
-            imageView.setImageURI(contentUri);
-            //TODO move to viewmodel
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            if (resultCode == RESULT_OK) {
+                File f = new File(newLocationViewModel.getPhotoPath());
+                Uri contentUri = Uri.fromFile(f);
+                imageView.setImageURI(contentUri);
+            } else {
+                newLocationViewModel.setPhotoPath(null);
+            }
         }
     }
 
