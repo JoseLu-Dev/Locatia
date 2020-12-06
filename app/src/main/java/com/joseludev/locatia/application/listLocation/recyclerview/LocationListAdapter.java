@@ -1,5 +1,6 @@
 package com.joseludev.locatia.application.listLocation.recyclerview;
 
+import android.content.Context;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -9,13 +10,16 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.joseludev.locatia.domain.models.LocationMinimal;
 
 public class LocationListAdapter extends ListAdapter<LocationMinimal, LocationViewHolder> {
-    public LocationListAdapter(@NonNull DiffUtil.ItemCallback<LocationMinimal> diffCallback) {
+
+    private Context context;
+    public LocationListAdapter(@NonNull DiffUtil.ItemCallback<LocationMinimal> diffCallback, Context context) {
         super(diffCallback);
+        this.context = context;
     }
 
     @Override
     public LocationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return LocationViewHolder.create(parent);
+        return LocationViewHolder.create(parent, context);
     }
 
     @Override

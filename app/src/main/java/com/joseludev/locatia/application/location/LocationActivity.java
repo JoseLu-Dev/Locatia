@@ -1,18 +1,28 @@
 package com.joseludev.locatia.application.location;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import com.joseludev.locatia.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
-import java.io.BufferedReader;
+import com.joseludev.locatia.R;
+import com.joseludev.locatia.databinding.ActivityLocationBinding;
+import com.joseludev.locatia.domain.models.LocationModel;
 
 public class LocationActivity extends AppCompatActivity {
+
+    private LocationViewModel locationViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location);
+        ActivityLocationBinding activityLocationBinding =
+                DataBindingUtil.setContentView(this, R.layout.activity_location);
+
+        locationViewModel = new LocationViewModel(
+                this.getApplication(),
+                getIntent().getStringExtra(LocationModel.LOCATION_NAME));
+
+        activityLocationBinding.setViewModel(locationViewModel);
     }
 }

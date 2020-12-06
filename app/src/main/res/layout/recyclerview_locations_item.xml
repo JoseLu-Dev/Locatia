@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
+    android:id="@+id/cardView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -31,16 +32,30 @@
                 android:textSize="20sp"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/black"
-                android:gravity="start|center_vertical"
-                android:text="Locationg"/>
+                android:gravity="start|center_vertical" />
 
-            <TextView
-                android:id="@+id/textViewDistance"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="end|center_vertical"
-                android:text="10000km"/>
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icons8_map_pinpoint_gray_24"/>
+
+                <TextView
+                    android:id="@+id/textViewDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="end|center_vertical"
+                    android:text="20000km"/>
+
+            </LinearLayout>
+
+
         </LinearLayout>
     </LinearLayout>
 

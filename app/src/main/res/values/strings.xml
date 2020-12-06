@@ -12,4 +12,7 @@
     <string name="add_location_image">add location image</string>
     <string name="location_image">location image</string>
     <string name="category">Category:</string>
+    <string name="sample_category">Sample Category</string>
+    <string name="coordinate_latitude_format">Latitude: %3.4f</string>
+    <string name="coordinate_longitude_format">Longitude: %3.4f</string>
 </resources>

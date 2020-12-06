@@ -27,7 +27,7 @@ public class ListLocationActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final LocationListAdapter adapter = new LocationListAdapter(new LocationListAdapter.WordDiff());
+        final LocationListAdapter adapter = new LocationListAdapter(new LocationListAdapter.WordDiff(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 

@@ -8,6 +8,8 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "location_table")
 public class LocationModel {
 
+    public static final String LOCATION_NAME = "locationName";
+
     @NonNull
     @ColumnInfo(name = "latitude")
     private double latitude;
