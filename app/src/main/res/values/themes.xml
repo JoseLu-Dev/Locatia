@@ -2,11 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.Locatia" parent="Theme.MaterialComponents.Light.NoActionBar">
 
-        <item name="colorPrimary">@color/orangePrimary</item>
-        <item name="colorPrimaryDark">@color/orangeDark</item>
-        <item name="colorAccent">@color/orangeLight</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/primaryLight</item>
 
-        <item name="colorSecondary">@color/orangeSecondary</item>
+        <item name="colorSecondary">@color/secondary</item>
 
         <!--Change style for all views-->
         <!--<item name="android:textViewStyle">@style/textViewStyle</item>-->

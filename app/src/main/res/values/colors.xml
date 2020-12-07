@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="defaultTextColor">@color/orangeLight</color>
+    <color name="primary">#ff8f00</color>
+    <color name="primaryLight">#ffc046</color>
+    <color name="primaryDark">#c56000</color>
 
-    <color name="orangePrimary">#ff8f00</color>
-    <color name="orangeLight">#ffc046</color>
-    <color name="orangeDark">#c56000</color>
-
-    <color name="orangeSecondary">#e64a19</color>
-
+    <color name="secondary">#e64a19</color>
     <color name="green">#009688</color>
 
     <color name="black">#000000</color>
