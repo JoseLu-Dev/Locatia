@@ -255,6 +255,7 @@
             android:contentDescription="@string/add_location_image"
             android:src="@drawable/ic_baseline_check_24"
             android:onClick="onCheckButtonClicked"
+            app:borderWidth="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintStart_toStartOf="parent"
@@ -270,6 +271,7 @@
             android:onClick="onCategoryAddButtonClicked"
             android:src="@drawable/ic_baseline_add_24"
             app:fabCustomSize="40dp"
+            app:borderWidth="0dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline3" />
