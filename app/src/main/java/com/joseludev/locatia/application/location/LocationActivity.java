@@ -1,6 +1,7 @@
 package com.joseludev.locatia.application.location;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -24,5 +25,9 @@ public class LocationActivity extends AppCompatActivity {
                 getIntent().getStringExtra(LocationModel.LOCATION_NAME));
 
         activityLocationBinding.setViewModel(locationViewModel);
+    }
+
+    public void openInMapsButton(View view){
+        locationViewModel.openInMaps(this);
     }
 }
