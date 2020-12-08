@@ -2,7 +2,6 @@ package com.joseludev.locatia.application.newLocation;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
@@ -11,11 +10,13 @@ import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.joseludev.locatia.BuildConfig;
 import com.joseludev.locatia.R;
 import com.joseludev.locatia.domain.database.LocationRoomDatabase;
+import com.joseludev.locatia.domain.models.CategoryDao;
 import com.joseludev.locatia.domain.models.CategoryModel;
 import com.joseludev.locatia.domain.models.LocationDao;
 import com.joseludev.locatia.domain.models.LocationModel;
@@ -23,8 +24,8 @@ import com.joseludev.locatia.domain.storage.StorageManager;
 
 import java.io.File;
 import java.io.IOException;
-
-import static android.provider.Settings.Global.getString;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class NewLocationViewModel extends AndroidViewModel {
@@ -41,7 +42,11 @@ public class NewLocationViewModel extends AndroidViewModel {
     private MutableLiveData<Double> latitude = new MutableLiveData<>(), longitude = new MutableLiveData<>();
     private String name, description;
     private String photoPath;
-    //private Category category; //TODO implement category
+    private CategoryModel category; //TODO implement category
+
+    private LiveData<List<CategoryModel>> firstCategories;
+    private LiveData<List<CategoryModel>> categories;
+
 
     public NewLocationViewModel(@NonNull Application application) {
         super(application);
@@ -49,6 +54,13 @@ public class NewLocationViewModel extends AndroidViewModel {
         INFORMATION_MISSING_DESCRIPTION = application.getString(R.string.missing_coordinates);
         INFORMATION_MISSING_PHOTO = application.getString(R.string.missing_coordinates);
         INFORMATION_MISSING_COORDINATES = application.getString(R.string.missing_coordinates);
+
+        LocationRoomDatabase db = LocationRoomDatabase.getDatabase(application);
+        CategoryDao categoryDao = db.categoryDao();
+        LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
+            firstCategories = categoryDao.getFirstsCategories();
+            categories = categoryDao.getCategories();
+        });
     }
 
     public MutableLiveData<Double> getLatitude() {
@@ -81,6 +93,14 @@ public class NewLocationViewModel extends AndroidViewModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public CategoryModel getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryModel category) {
+        this.category = category;
     }
 
     public void takePicture(Activity activity) {
@@ -148,5 +168,13 @@ public class NewLocationViewModel extends AndroidViewModel {
         LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
             locationDao.insert(locationModel);
         });
+    }
+
+    public LiveData<List<CategoryModel>> getAllCategories(Application application){
+        return categories;
+    }
+
+    public LiveData<List<CategoryModel>> getFirstsCategories(Application application){
+        return firstCategories;
     }
 }

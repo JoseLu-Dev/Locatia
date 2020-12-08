@@ -1,5 +1,6 @@
 package com.joseludev.locatia.application.newLocation;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,8 +15,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,13 +29,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
 import com.joseludev.locatia.R;
+import com.joseludev.locatia.databinding.ActivityLocationBinding;
+import com.joseludev.locatia.databinding.ActivityNewLocationActivityBinding;
 import com.joseludev.locatia.domain.location.LocationManager;
+import com.joseludev.locatia.domain.models.CategoryModel;
 import com.joseludev.locatia.domain.models.LocationModel;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.joseludev.locatia.application.newLocation.NewLocationViewModel.REQUEST_TAKE_PHOTO;
 
@@ -43,12 +54,16 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_location_activity);
+
+        ActivityNewLocationActivityBinding activityNewLocationActivityBinding =
+                DataBindingUtil.setContentView(this, R.layout.activity_new_location_activity);
+
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         myToolbar.setTitle(getString(R.string.new_location));
         setSupportActionBar(myToolbar);
 
         newLocationViewModel = new NewLocationViewModel(this.getApplication());
+        activityNewLocationActivityBinding.setViewModel(newLocationViewModel);
 
         LocationManager.getLocationCurrent(this, this);
 
@@ -56,6 +71,23 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
 
         setObservers();
         setOnTextChangedListeners();
+
+        setSpinner();
+    }
+
+    private void setSpinner(){
+        Spinner spinner = findViewById(R.id.spinner);
+
+        newLocationViewModel.getFirstsCategories(this.getApplication()).observe(this, categoryModels -> {
+            String[] array = new String[categoryModels.size()];
+
+            for(int i = 0; i < array.length; i++){
+                array[i] = categoryModels.get(i).getCategory();
+            }
+
+            ArrayAdapter arrayAdapter = new ArrayAdapter<>(NewLocationActivity.this, android.R.layout.simple_list_item_1, array);
+            spinner.setAdapter(arrayAdapter);
+        });
     }
 
     private void setObservers() {
@@ -71,6 +103,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
             editTextLongitude.setText(String.valueOf(aDouble));
         };
         newLocationViewModel.getLongitude().observe(this, longitudeObserver);
+        //TODO change for data data binding
     }
 
     private void setOnTextChangedListeners() {
@@ -115,7 +148,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     }
 
     public void onCategoryAddButtonClicked(View view) {
-
+        //TODO implement
     }
 
     public void onTakePictureButtonClicked(View view) {
