@@ -14,6 +14,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.joseludev.locatia.BuildConfig;
+import com.joseludev.locatia.R;
 import com.joseludev.locatia.domain.database.LocationRoomDatabase;
 import com.joseludev.locatia.domain.models.CategoryModel;
 import com.joseludev.locatia.domain.models.LocationDao;
@@ -23,14 +24,16 @@ import com.joseludev.locatia.domain.storage.StorageManager;
 import java.io.File;
 import java.io.IOException;
 
+import static android.provider.Settings.Global.getString;
+
 
 public class NewLocationViewModel extends AndroidViewModel {
 
-    static final String INFORMATION_VALID = "Valid",
-            INFORMATION_MISSING_NAME = "Missing name",
-            INFORMATION_MISSING_DESCRIPTION = "Missing description",
-            INFORMATION_MISSING_PHOTO = "Missing photo",
-            INFORMATION_MISSING_COORDINATES = "Missing coordinates";
+    static String INFORMATION_VALID = "Valid",
+            INFORMATION_MISSING_NAME,
+            INFORMATION_MISSING_DESCRIPTION,
+            INFORMATION_MISSING_PHOTO,
+            INFORMATION_MISSING_COORDINATES;
 
     static final int REQUEST_TAKE_PHOTO = 1;
 
@@ -42,6 +45,10 @@ public class NewLocationViewModel extends AndroidViewModel {
 
     public NewLocationViewModel(@NonNull Application application) {
         super(application);
+        INFORMATION_VALID = application.getString(R.string.missing_coordinates);
+        INFORMATION_MISSING_DESCRIPTION = application.getString(R.string.missing_coordinates);
+        INFORMATION_MISSING_PHOTO = application.getString(R.string.missing_coordinates);
+        INFORMATION_MISSING_COORDINATES = application.getString(R.string.missing_coordinates);
     }
 
     public MutableLiveData<Double> getLatitude() {
@@ -138,7 +145,7 @@ public class NewLocationViewModel extends AndroidViewModel {
         LocationModel locationModel = getLocationItem();
         LocationRoomDatabase db = LocationRoomDatabase.getDatabase(application);
         LocationDao locationDao = db.locationDao();
-        LocationRoomDatabase.getDatabaseWriteExecutor().execute(() ->{
+        LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
             locationDao.insert(locationModel);
         });
     }

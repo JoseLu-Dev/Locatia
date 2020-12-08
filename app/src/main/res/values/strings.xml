@@ -20,4 +20,9 @@
     <string name="enable">Enable</string>
     <string name="cancel">Cancel</string>
     <string name="would_you_like_to_enable_question">Would you like to enable it?</string>
+
+    <string name="missing_name">Missing name</string>
+    <string name="missing_description">Missing description</string>
+    <string name="missing_photo">Missing photo</string>
+    <string name="missing_coordinates">Missing coordinates</string>
 </resources>
