@@ -10,4 +10,7 @@
 
     <color name="black">#000000</color>
 
+    <color name="colouredTextColor">@color/primary</color>
+    <color name="backgroundColor">#FFFFFF</color>
+
 </resources>

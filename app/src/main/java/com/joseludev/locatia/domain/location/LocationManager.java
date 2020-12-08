@@ -2,13 +2,20 @@ package com.joseludev.locatia.domain.location;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.joseludev.locatia.application.dialogs.GpsAlertDialogFragment;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 
 public class LocationManager {
@@ -25,13 +32,17 @@ public class LocationManager {
                 activity, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            // You can use the API that requires the permission.
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
-                Location location = task.getResult();
-                if (location != null) {
-                    locationManagerHandler.onLocationChanged(location);
-                }
-            });
+
+            if (isGpsEnabled(activity)) {
+                fusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        locationManagerHandler.onLocationChanged(location);
+                    }
+                });
+            } else {
+                showGPSDisabledAlertDialog((AppCompatActivity) activity);
+            }
 
         } else {
             // In an educational UI, explain to the user why your app requires this
@@ -50,13 +61,16 @@ public class LocationManager {
     public static void onRequestedLocationPermissionsResult(Activity activity, LocationManagerHandler locationManagerHandler) {
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
-                Location location = task.getResult();
-                if (location != null) {
-                    locationManagerHandler.onLocationChanged(location);
-                }
-            });
+            if (isGpsEnabled(activity)) {
+                fusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        locationManagerHandler.onLocationChanged(location);
+                    }
+                });
+            } else {
+                showGPSDisabledAlertDialog((AppCompatActivity) activity);
+            }
         } else {
             // Explain to the user that the feature is unavailable because
             // the features requires a permission that the user has denied.
@@ -68,8 +82,18 @@ public class LocationManager {
 
     }
 
+    private static boolean isGpsEnabled(Context context) {
+        android.location.LocationManager locationManager = getSystemService(context, android.location.LocationManager.class);
+        return locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
+    }
+
+    private static void showGPSDisabledAlertDialog(AppCompatActivity activity) {
+        GpsAlertDialogFragment.newInstance().show(activity.getSupportFragmentManager(), "");
+    }
+
     public interface LocationManagerHandler {
         void onLocationChanged(Location location);
+
         void onLocationPermissionDenied();
     }
 

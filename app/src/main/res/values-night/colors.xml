@@ -6,4 +6,8 @@
 
     <color name="secondary">#e64a19</color>
     <color name="green">#26A69A</color>
+
+    <color name="colouredTextColor">@color/secondary</color>
+    <color name="backgroundColor">@color/primaryDark</color>
+
 </resources>

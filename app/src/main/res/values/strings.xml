@@ -15,4 +15,10 @@
     <string name="sample_category">Sample Category</string>
     <string name="coordinate_latitude_format">Latitude: %3.4f</string>
     <string name="coordinate_longitude_format">Longitude: %3.4f</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gps_is_disabled_alert_dialog_message">GPS is disabled</string>
+    <string name="enable">Enable</string>
+    <string name="cancel">Cancel</string>
+    <string name="would_you_like_to_enable_question">Would you like to enable it?</string>
 </resources>
