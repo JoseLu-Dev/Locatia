@@ -26,7 +26,6 @@ public class LocationManager {
 
 
     public static void getLocationCurrent(Activity activity, LocationManagerHandler locationManagerHandler) {
-        //TODO check if gps is activated
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
         if (ContextCompat.checkSelfPermission(
                 activity, Manifest.permission.ACCESS_FINE_LOCATION) ==
