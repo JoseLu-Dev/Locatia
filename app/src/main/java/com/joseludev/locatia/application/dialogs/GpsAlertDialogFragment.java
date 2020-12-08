@@ -55,7 +55,4 @@ public class GpsAlertDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    public void onCancelButtonClick(View view){
-
-    }
 }
