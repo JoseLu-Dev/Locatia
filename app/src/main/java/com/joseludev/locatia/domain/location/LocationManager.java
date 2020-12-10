@@ -3,11 +3,9 @@ package com.joseludev.locatia.domain.location;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -92,7 +90,6 @@ public class LocationManager {
 
     public interface LocationManagerHandler {
         void onLocationChanged(Location location);
-
         void onLocationPermissionDenied();
     }
 
