@@ -1,47 +1,31 @@
 package com.joseludev.locatia.application.newLocation;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
-import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
 import com.joseludev.locatia.R;
-import com.joseludev.locatia.databinding.ActivityLocationBinding;
 import com.joseludev.locatia.databinding.ActivityNewLocationActivityBinding;
 import com.joseludev.locatia.domain.location.LocationManager;
-import com.joseludev.locatia.domain.models.CategoryModel;
-import com.joseludev.locatia.domain.models.LocationModel;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.joseludev.locatia.application.newLocation.NewLocationViewModel.REQUEST_TAKE_PHOTO;
 
@@ -65,7 +49,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
         newLocationViewModel = new NewLocationViewModel(this.getApplication());
         activityNewLocationActivityBinding.setViewModel(newLocationViewModel);
 
-        LocationManager.getLocationCurrent(this, this);
+        LocationManager.getLocationCurrent(this);
 
         imageView = findViewById(R.id.imageView);
 
@@ -183,7 +167,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case LocationManager.REQUEST_CODE_LOCATION:
-                LocationManager.onRequestedLocationPermissionsResult(this, this);
+                LocationManager.onRequestedLocationPermissionsResult(this);
                 break;
             case 1:
                 break;

@@ -23,7 +23,7 @@ public class LocationManager {
     private static FusedLocationProviderClient fusedLocationProviderClient;
 
 
-    public static void getLocationCurrent(Activity activity, LocationManagerHandler locationManagerHandler) {
+    public static void getLocationCurrent(Activity activity) {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
         if (ContextCompat.checkSelfPermission(
                 activity, Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -34,7 +34,7 @@ public class LocationManager {
                 fusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
                     Location location = task.getResult();
                     if (location != null) {
-                        locationManagerHandler.onLocationChanged(location);
+                        ((LocationManagerHandler)activity).onLocationChanged(location);
                     }
                 });
             } else {
@@ -55,14 +55,14 @@ public class LocationManager {
     }
 
 
-    public static void onRequestedLocationPermissionsResult(Activity activity, LocationManagerHandler locationManagerHandler) {
+    public static void onRequestedLocationPermissionsResult(Activity activity) {
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (isGpsEnabled(activity)) {
                 fusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
                     Location location = task.getResult();
                     if (location != null) {
-                        locationManagerHandler.onLocationChanged(location);
+                        ((LocationManagerHandler)activity).onLocationChanged(location);
                     }
                 });
             } else {
@@ -74,7 +74,7 @@ public class LocationManager {
             // At the same time, respect the user's decision. Don't link to
             // system settings in an effort to convince the user to change
             // their decision.
-            locationManagerHandler.onLocationPermissionDenied();
+            ((LocationManagerHandler)activity).onLocationPermissionDenied();
         }
 
     }
