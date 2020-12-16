@@ -168,11 +168,18 @@ public class NewLocationViewModel extends AndroidViewModel {
         });
     }
 
-    public LiveData<List<CategoryModel>> getAllCategories(Application application){
+    public LiveData<List<CategoryModel>> getAllCategories(){
         return categories;
     }
 
-    public LiveData<List<CategoryModel>> getFirstsCategories(Application application){
+    public LiveData<List<CategoryModel>> getFirstsCategories() {
+        while(!firstCategories.hasObservers()){
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return firstCategories;
     }
 }

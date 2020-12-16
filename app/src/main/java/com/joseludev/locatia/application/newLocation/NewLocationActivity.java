@@ -48,7 +48,6 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
 
         imageView = findViewById(R.id.imageView);
 
-        setSpinner();
     }
 
     @Override
@@ -60,7 +59,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     private void setSpinner() {
         Spinner spinner = findViewById(R.id.spinner);
 
-        newLocationViewModel.getFirstsCategories(this.getApplication()).observe(this, categoryModels -> {
+        newLocationViewModel.getFirstsCategories().observe(this, categoryModels -> {
             String[] array = new String[categoryModels.size()];
 
             for (int i = 0; i < array.length; i++) {
