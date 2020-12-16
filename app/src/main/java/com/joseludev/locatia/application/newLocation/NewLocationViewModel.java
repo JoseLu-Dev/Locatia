@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.joseludev.locatia.BuildConfig;
 import com.joseludev.locatia.R;
@@ -24,7 +23,6 @@ import com.joseludev.locatia.domain.storage.StorageManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,7 +37,7 @@ public class NewLocationViewModel extends AndroidViewModel {
     static final int REQUEST_TAKE_PHOTO = 1;
 
     private boolean locationSetted = false;
-    private MutableLiveData<Double> latitude = new MutableLiveData<>(), longitude = new MutableLiveData<>();
+    private double latitude, longitude;
     private String name, description;
     private String photoPath;
     private CategoryModel category; //TODO implement category
@@ -63,19 +61,19 @@ public class NewLocationViewModel extends AndroidViewModel {
         });
     }
 
-    public MutableLiveData<Double> getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(MutableLiveData<Double> latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public MutableLiveData<Double> getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(MutableLiveData<Double> longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -152,13 +150,13 @@ public class NewLocationViewModel extends AndroidViewModel {
     }
 
     public void setLocation(Location location) {
-        latitude.setValue(location.getLatitude());
-        longitude.setValue(location.getLongitude());
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
         locationSetted = true;
     }
 
     public LocationModel getLocationItem() {
-        return new LocationModel(latitude.getValue(), longitude.getValue(), name, description, photoPath, null);
+        return new LocationModel(latitude, longitude, name, description, photoPath, null);
     }
 
     public void saveLocationOnDatabase(Application application) {

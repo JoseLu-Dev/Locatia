@@ -4,14 +4,10 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.joseludev.locatia.R;
 import com.joseludev.locatia.databinding.ActivityNewLocationActivityBinding;
@@ -32,14 +27,16 @@ import static com.joseludev.locatia.application.newLocation.NewLocationViewModel
 
 public class NewLocationActivity extends AppCompatActivity implements LocationManager.LocationManagerHandler {
 
+    private ActivityNewLocationActivityBinding activityNewLocationActivityBinding;
     private NewLocationViewModel newLocationViewModel;
+
     private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityNewLocationActivityBinding activityNewLocationActivityBinding =
+        activityNewLocationActivityBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_new_location_activity);
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
@@ -49,85 +46,29 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
         newLocationViewModel = new NewLocationViewModel(this.getApplication());
         activityNewLocationActivityBinding.setViewModel(newLocationViewModel);
 
-        LocationManager.getLocationCurrent(this);
-
         imageView = findViewById(R.id.imageView);
-
-        setObservers();
-        setOnTextChangedListeners();
 
         setSpinner();
     }
 
-    private void setSpinner(){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocationManager.getLocationCurrent(this);
+    }
+
+    private void setSpinner() {
         Spinner spinner = findViewById(R.id.spinner);
 
         newLocationViewModel.getFirstsCategories(this.getApplication()).observe(this, categoryModels -> {
             String[] array = new String[categoryModels.size()];
 
-            for(int i = 0; i < array.length; i++){
+            for (int i = 0; i < array.length; i++) {
                 array[i] = categoryModels.get(i).getCategory();
             }
 
             ArrayAdapter arrayAdapter = new ArrayAdapter<>(NewLocationActivity.this, android.R.layout.simple_list_item_1, array);
             spinner.setAdapter(arrayAdapter);
-        });
-    }
-
-    private void setObservers() {
-        TextView editTextLatitude = findViewById(R.id.editTextLatitude);
-        TextView editTextLongitude = findViewById(R.id.editTextLongitude);
-
-        final Observer<Double> latitudeObserver = aDouble -> {
-            editTextLatitude.setText(String.valueOf(aDouble));
-        };
-        newLocationViewModel.getLatitude().observe(this, latitudeObserver);
-
-        final Observer<Double> longitudeObserver = aDouble -> {
-            editTextLongitude.setText(String.valueOf(aDouble));
-        };
-        newLocationViewModel.getLongitude().observe(this, longitudeObserver);
-        //TODO change for data data binding
-    }
-
-    private void setOnTextChangedListeners() {
-        EditText editTextName, editTextDescription;
-
-        editTextName = findViewById(R.id.editTextName);
-        editTextDescription = findViewById(R.id.editTextTextMultiLineDescription);
-
-        editTextName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                newLocationViewModel.setName(String.valueOf(s));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        editTextDescription.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                newLocationViewModel.setDescription(String.valueOf(s));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
         });
     }
 
@@ -177,10 +118,12 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     @Override
     public void onLocationChanged(Location location) {
         newLocationViewModel.setLocation(location);
+        activityNewLocationActivityBinding.invalidateAll();
     }
 
     @Override
     public void onLocationPermissionDenied() {
 
     }
+
 }
