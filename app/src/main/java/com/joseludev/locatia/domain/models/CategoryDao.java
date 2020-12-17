@@ -1,7 +1,5 @@
 package com.joseludev.locatia.domain.models;
 
-import android.location.Location;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -23,6 +21,6 @@ public interface CategoryDao {
     @Query("SELECT * FROM category_table")
     LiveData<List<CategoryModel>> getCategories();
 
-    @Query("SELECT * FROM category_table LIMIT 0, 5")
+    @Query("SELECT * FROM category_table LIMIT 0, 4")
     LiveData<List<CategoryModel>> getFirstsCategories();
 }

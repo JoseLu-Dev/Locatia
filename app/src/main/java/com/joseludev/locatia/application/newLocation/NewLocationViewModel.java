@@ -43,8 +43,6 @@ public class NewLocationViewModel extends AndroidViewModel {
     private CategoryModel category; //TODO implement category
 
     private LiveData<List<CategoryModel>> firstCategories;
-    private LiveData<List<CategoryModel>> categories;
-
 
     public NewLocationViewModel(@NonNull Application application) {
         super(application);
@@ -57,7 +55,6 @@ public class NewLocationViewModel extends AndroidViewModel {
         CategoryDao categoryDao = db.categoryDao();
         LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
             firstCategories = categoryDao.getFirstsCategories();
-            categories = categoryDao.getCategories();
         });
     }
 
@@ -168,12 +165,8 @@ public class NewLocationViewModel extends AndroidViewModel {
         });
     }
 
-    public LiveData<List<CategoryModel>> getAllCategories(){
-        return categories;
-    }
-
     public LiveData<List<CategoryModel>> getFirstsCategories() {
-        while(!firstCategories.hasObservers()){
+        while(firstCategories == null){
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {

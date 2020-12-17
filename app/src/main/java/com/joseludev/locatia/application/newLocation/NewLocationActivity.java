@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
 import com.joseludev.locatia.R;
+import com.joseludev.locatia.application.categories.NewCategoryDialogFragment;
 import com.joseludev.locatia.databinding.ActivityNewLocationActivityBinding;
 import com.joseludev.locatia.domain.location.LocationManager;
 
@@ -48,6 +49,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
 
         imageView = findViewById(R.id.imageView);
 
+        setSpinner();
     }
 
     @Override
@@ -72,7 +74,7 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     }
 
     public void onCategoryAddButtonClicked(View view) {
-        //TODO implement
+        NewCategoryDialogFragment.newInstance(this.getApplication()).show(getSupportFragmentManager(), "");
     }
 
     public void onTakePictureButtonClicked(View view) {
