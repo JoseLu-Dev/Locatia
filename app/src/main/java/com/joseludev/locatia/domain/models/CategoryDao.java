@@ -22,4 +22,7 @@ public interface CategoryDao {
 
     @Query("SELECT * FROM category_table LIMIT 0, 4")
     LiveData<List<CategoryModel>> getFirstsCategories();
+
+    @Query("SELECT * FROM category_table LIMIT 0, 1")
+    CategoryModel getFirstCategory();
 }

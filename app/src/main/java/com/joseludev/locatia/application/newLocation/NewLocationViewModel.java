@@ -24,6 +24,7 @@ import com.joseludev.locatia.domain.storage.StorageManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 
 public class NewLocationViewModel extends AndroidViewModel {
@@ -32,7 +33,8 @@ public class NewLocationViewModel extends AndroidViewModel {
             INFORMATION_MISSING_NAME,
             INFORMATION_MISSING_DESCRIPTION,
             INFORMATION_MISSING_PHOTO,
-            INFORMATION_MISSING_COORDINATES;
+            INFORMATION_MISSING_COORDINATES,
+            INFORMATION_MISSING_CATEGORY;
 
     static final int REQUEST_TAKE_PHOTO = 1;
 
@@ -40,22 +42,27 @@ public class NewLocationViewModel extends AndroidViewModel {
     private double latitude, longitude;
     private String name, description;
     private String photoPath;
-    private CategoryModel category; //TODO implement category
+    private CategoryModel category;
 
     private LiveData<List<CategoryModel>> firstCategories;
 
     public NewLocationViewModel(@NonNull Application application) {
         super(application);
-        INFORMATION_VALID = application.getString(R.string.missing_coordinates);
-        INFORMATION_MISSING_DESCRIPTION = application.getString(R.string.missing_coordinates);
-        INFORMATION_MISSING_PHOTO = application.getString(R.string.missing_coordinates);
+        INFORMATION_MISSING_NAME = application.getString(R.string.missing_name);
+        INFORMATION_MISSING_DESCRIPTION = application.getString(R.string.missing_description);
+        INFORMATION_MISSING_PHOTO = application.getString(R.string.missing_photo);
         INFORMATION_MISSING_COORDINATES = application.getString(R.string.missing_coordinates);
+        INFORMATION_MISSING_CATEGORY = application.getString(R.string.missing_category);
 
         LocationRoomDatabase db = LocationRoomDatabase.getDatabase(application);
         CategoryDao categoryDao = db.categoryDao();
         LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
             firstCategories = categoryDao.getFirstsCategories();
+            if (firstCategories.getValue() != null && firstCategories.getValue().get(0) != null) {
+                category = firstCategories.getValue().get(0);
+            }
         });
+
     }
 
     public double getLatitude() {
@@ -130,6 +137,8 @@ public class NewLocationViewModel extends AndroidViewModel {
             return NewLocationViewModel.INFORMATION_MISSING_PHOTO;
         } else if (!locationSetted) {
             return NewLocationViewModel.INFORMATION_MISSING_COORDINATES;
+        } else if (category == null) {
+            return NewLocationViewModel.INFORMATION_MISSING_CATEGORY;
         }
         return NewLocationViewModel.INFORMATION_VALID;
     }
@@ -153,7 +162,7 @@ public class NewLocationViewModel extends AndroidViewModel {
     }
 
     public LocationModel getLocationItem() {
-        return new LocationModel(latitude, longitude, name, description, photoPath, null);
+        return new LocationModel(latitude, longitude, name, description, photoPath, category);
     }
 
     public void saveLocationOnDatabase(Application application) {
@@ -166,7 +175,7 @@ public class NewLocationViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<CategoryModel>> getFirstsCategories() {
-        while(firstCategories == null){
+        while (firstCategories == null) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -174,5 +183,12 @@ public class NewLocationViewModel extends AndroidViewModel {
             }
         }
         return firstCategories;
+    }
+
+    public void setFirstCategory(CategoryModel categoryModel) {
+        Objects.requireNonNull(this.firstCategories.getValue()).add(0, categoryModel);
+        if (firstCategories.getValue().size() >= 5) {
+            firstCategories.getValue().remove(firstCategories.getValue().size() - 1);
+        }
     }
 }

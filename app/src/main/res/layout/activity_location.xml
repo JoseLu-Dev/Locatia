@@ -94,7 +94,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:padding="8dp"
-                    android:text="@string/sample_category"
+                    android:text="@{viewModel.locationModel.categoryModel.category}"
                     android:textSize="20sp" />
             </LinearLayout>
 

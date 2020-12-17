@@ -25,5 +25,8 @@
     <string name="missing_description">Missing description</string>
     <string name="missing_photo">Missing photo</string>
     <string name="missing_coordinates">Missing coordinates</string>
+    <string name="missing_category">Missing category</string>
+
     <string name="category_hint">Category</string>
+
 </resources>
