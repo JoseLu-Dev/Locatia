@@ -1,7 +1,5 @@
 package com.joseludev.locatia.domain.models;
 
-import android.location.Location;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -12,8 +10,7 @@ import java.util.List;
 
 @Dao
 public interface LocationDao {
-    // allowing the insert of the same word multiple times by passing a
-    // conflict resolution strategy
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(LocationModel locationModel);
 
