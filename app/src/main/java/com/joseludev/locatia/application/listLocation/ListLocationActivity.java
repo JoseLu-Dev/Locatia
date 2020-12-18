@@ -1,16 +1,14 @@
 package com.joseludev.locatia.application.listLocation;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TableLayout;
 
 import com.joseludev.locatia.R;
 import com.joseludev.locatia.application.listLocation.recyclerview.LocationListAdapter;
@@ -25,7 +23,7 @@ public class ListLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         setContentView(R.layout.activity_list_location);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
@@ -36,7 +34,6 @@ public class ListLocationActivity extends AppCompatActivity {
         listLocationViewModel = new ListLocationViewModel(this.getApplication());
 
         listLocationViewModel.getLocationList().observe(this, locations -> {
-            // Update the cached copy of the words in the adapter.
             adapter.submitList(locations);
         });
     }

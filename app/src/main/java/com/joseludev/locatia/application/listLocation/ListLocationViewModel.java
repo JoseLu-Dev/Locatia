@@ -13,15 +13,18 @@ import java.util.List;
 
 public class ListLocationViewModel extends AndroidViewModel {
 
-    private final LiveData<List<LocationMinimal>> locationList;
+    private LocationRoomDatabase db;
 
     public ListLocationViewModel(@NonNull Application application) {
         super(application);
-        LocationRoomDatabase db = LocationRoomDatabase.getDatabase(application);
-        locationList = db.locationDao().getLocationsMinimal();
+        db = LocationRoomDatabase.getDatabase(application);
     }
 
     public LiveData<List<LocationMinimal>> getLocationList() {
-        return locationList;
+        return db.locationDao().getLocationsMinimal();
+    }
+
+    public LiveData<List<LocationMinimal>> getLocationListByName(String name) {
+        return db.locationDao().getLocationsMinimalByName(name);
     }
 }
