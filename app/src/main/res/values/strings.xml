@@ -28,5 +28,10 @@
     <string name="missing_category">Missing category</string>
 
     <string name="category_hint">Category</string>
+    <string name="add">Add</string>
+    <string name="add_new_category">Add new category</string>
+    <string name="ok">OK</string>
+
+    <string name="more">More</string>
 
 </resources>

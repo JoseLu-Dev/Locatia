@@ -1,7 +1,7 @@
 package com.joseludev.locatia.application.categories;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,16 +21,16 @@ import java.util.Objects;
 
 public class NewCategoryDialogFragment extends DialogFragment {
 
-    private Application application;
+    private Activity activity;
     private EditText editTextCategory;
 
     public NewCategoryDialogFragment() {
 
     }
 
-    public static NewCategoryDialogFragment newInstance(Application application) {
+    public static NewCategoryDialogFragment newInstance(Activity activity) {
         NewCategoryDialogFragment fragment = new NewCategoryDialogFragment();
-        fragment.application = application;
+        fragment.activity = activity;
         return fragment;
     }
 
@@ -53,7 +53,7 @@ public class NewCategoryDialogFragment extends DialogFragment {
         });
 
         view.findViewById(R.id.confirm_button).setOnClickListener(v -> {
-            LocationRoomDatabase db = LocationRoomDatabase.getDatabase(application);
+            LocationRoomDatabase db = LocationRoomDatabase.getDatabase(activity.getApplication());
             CategoryDao categoryDao = db.categoryDao();
             LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
                 categoryDao.insert(new CategoryModel(editTextCategory.getText().toString()));

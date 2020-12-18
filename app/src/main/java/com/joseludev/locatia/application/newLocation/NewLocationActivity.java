@@ -1,5 +1,6 @@
 package com.joseludev.locatia.application.newLocation;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import com.joseludev.locatia.application.categories.CategorySelectionManager;
 import com.joseludev.locatia.application.categories.NewCategoryDialogFragment;
 import com.joseludev.locatia.databinding.ActivityNewLocationActivityBinding;
 import com.joseludev.locatia.domain.location.LocationManager;
+import com.joseludev.locatia.domain.models.CategoryModel;
 
 import java.io.File;
 import java.util.Objects;
@@ -66,24 +68,38 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
         Spinner spinner = findViewById(R.id.spinner);
 
         newLocationViewModel.getFirstsCategories().observe(this, categoryModels -> {
-            String[] array = new String[categoryModels.size()];
+            String[] array;
+            array = new String[categoryModels.size()];
+
 
             for (int i = 0; i < array.length; i++) {
                 array[i] = categoryModels.get(i).getCategory();
+            }
+
+            if (array.length > 3) {
+                String[] copiedArray = array;
+                array = new String[copiedArray.length + 1];
+                System.arraycopy(copiedArray, 0, array, 0, copiedArray.length);
+                array[array.length-1] = getString(R.string.more);
             }
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(NewLocationActivity.this, android.R.layout.simple_list_item_1, array);
             spinner.setAdapter(arrayAdapter);
         });
 
+        Activity activity = this;
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            private int previousSelected;
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position < 5) {
+                if (position < 4) {
                     newLocationViewModel.setCategory(Objects.requireNonNull(newLocationViewModel.getFirstsCategories().getValue()).get(position));
+                    previousSelected = spinner.getSelectedItemPosition();
                 } else {
-                    CategoriesDialogFragment.newInstance().show(getSupportFragmentManager(), "");
+                    spinner.setSelection(previousSelected);
+                    CategoriesDialogFragment.newInstance(activity, newLocationViewModel.getAllCategories(), previousSelected).show(getSupportFragmentManager(), "");
                 }
+
             }
 
             @Override
@@ -94,12 +110,13 @@ public class NewLocationActivity extends AppCompatActivity implements LocationMa
     }
 
     @Override
-    public void onCategorySelected() {
-
+    public void onCategorySelected(CategoryModel categoryModel) {
+        newLocationViewModel.setFirstCategory(categoryModel);
+        setSpinner();
     }
 
     public void onCategoryAddButtonClicked(View view) {
-        NewCategoryDialogFragment.newInstance(this.getApplication()).show(getSupportFragmentManager(), "");
+        NewCategoryDialogFragment.newInstance(this).show(getSupportFragmentManager(), "");
     }
 
     public void onTakePictureButtonClicked(View view) {

@@ -18,11 +18,8 @@ public interface CategoryDao {
     void deleteAll();
 
     @Query("SELECT * FROM category_table")
-    LiveData<List<CategoryModel>> getCategories();
+    List<CategoryModel> getCategories();
 
-    @Query("SELECT * FROM category_table LIMIT 0, 4")
-    LiveData<List<CategoryModel>> getFirstsCategories();
-
-    @Query("SELECT * FROM category_table LIMIT 0, 1")
-    CategoryModel getFirstCategory();
+    @Query("SELECT * FROM category_table ORDER BY rowid DESC LIMIT 4")
+    LiveData<List<CategoryModel>> getLastCategories();
 }

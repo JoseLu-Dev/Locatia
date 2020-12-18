@@ -13,4 +13,5 @@
     <color name="colouredTextColor">@color/primary</color>
     <color name="backgroundColor">#FFFFFF</color>
 
+    <color name="gray">#c1d5e0</color>
 </resources>

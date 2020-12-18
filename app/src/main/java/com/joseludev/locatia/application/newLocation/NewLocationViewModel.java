@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
@@ -24,7 +25,6 @@ import com.joseludev.locatia.domain.storage.StorageManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 
 public class NewLocationViewModel extends AndroidViewModel {
@@ -44,7 +44,8 @@ public class NewLocationViewModel extends AndroidViewModel {
     private String photoPath;
     private CategoryModel category;
 
-    private LiveData<List<CategoryModel>> firstCategories;
+    private LiveData<List<CategoryModel>> lastCategories;
+    private List<CategoryModel> allCategories;
 
     public NewLocationViewModel(@NonNull Application application) {
         super(application);
@@ -57,10 +58,8 @@ public class NewLocationViewModel extends AndroidViewModel {
         LocationRoomDatabase db = LocationRoomDatabase.getDatabase(application);
         CategoryDao categoryDao = db.categoryDao();
         LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
-            firstCategories = categoryDao.getFirstsCategories();
-            if (firstCategories.getValue() != null && firstCategories.getValue().get(0) != null) {
-                category = firstCategories.getValue().get(0);
-            }
+            lastCategories = categoryDao.getLastCategories();
+            allCategories = categoryDao.getCategories();
         });
 
     }
@@ -175,20 +174,25 @@ public class NewLocationViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<CategoryModel>> getFirstsCategories() {
-        while (firstCategories == null) {
+        while (lastCategories == null) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        return firstCategories;
+        return lastCategories;
     }
 
     public void setFirstCategory(CategoryModel categoryModel) {
-        Objects.requireNonNull(this.firstCategories.getValue()).add(0, categoryModel);
-        if (firstCategories.getValue().size() >= 5) {
-            firstCategories.getValue().remove(firstCategories.getValue().size() - 1);
+        this.lastCategories.getValue().add(0, categoryModel);
+        if (lastCategories.getValue().size() >= 4) {
+            lastCategories.getValue().remove(lastCategories.getValue().size() - 1);
         }
+        Log.i("firstCategories", this.lastCategories.getValue().toString());
+    }
+
+    public List<CategoryModel> getAllCategories() {
+        return allCategories;
     }
 }

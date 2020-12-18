@@ -18,8 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="38dp"
             android:layout_marginTop="24sp"
-            android:text="Add new category"
+            android:text="@string/add_new_category"
             android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_marginEnd="16dp"/>
 
         <EditText
@@ -54,7 +55,7 @@
                 android:backgroundTint="@color/backgroundColor"
                 android:textColor="@color/primary"
                 style="?android:attr/borderlessButtonStyle"
-                android:text="@string/enable"/>
+                android:text="@string/add"/>
 
         </LinearLayout>
 
