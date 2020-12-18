@@ -68,7 +68,9 @@ public class CategoriesDialogFragment extends DialogFragment {
         });
 
         view.findViewById(R.id.confirm_button).setOnClickListener(v -> {
-            ((CategorySelectionManager)activity).onCategorySelected(categorySelected);
+            if (categorySelected != null && listViewCategories.getSelectedItemPosition() != array.length - initialSelected - 1) {
+                ((CategorySelectionManager) activity).onCategorySelected(categorySelected);
+            }
             this.dismiss();
         });
 
