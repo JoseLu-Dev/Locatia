@@ -2,7 +2,6 @@ package com.joseludev.locatia.application.listLocation.recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.joseludev.locatia.R;
@@ -39,7 +37,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(String name, Double distance, String photoPath) {
         textViewName.setText(name);
-        //textViewDistance.setText(String.valueOf(distance));
+        textViewDistance.setText(String.valueOf(distance));
         imageView.setImageURI(Uri.fromFile(new File(photoPath)));
     }
 

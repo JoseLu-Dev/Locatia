@@ -29,11 +29,10 @@ public class LocationManager {
     }
 
 
-    public static Location getLocationCurrentCache(Activity activity) {
+    public static void getLocationCurrentCache(Activity activity) {
         if (currentCachedLocation == null) {
             getLocation(activity, LocationMode.CACHE);
         }
-        return currentCachedLocation;
     }
 
     public static void getLocationCurrent(Activity activity) {
@@ -53,9 +52,8 @@ public class LocationManager {
                     if (location != null) {
                         if (locationMode == LocationMode.CACHE) {
                             LocationManager.currentCachedLocation = location;
-                        } else {
-                            ((LocationManagerHandler) activity).onLocationChanged(location);
                         }
+                        ((LocationManagerHandler) activity).onLocationChanged(location);
                     }
                 });
             } else {
@@ -111,7 +109,6 @@ public class LocationManager {
 
     public interface LocationManagerHandler {
         void onLocationChanged(Location location);
-
         void onLocationPermissionDenied();
     }
 

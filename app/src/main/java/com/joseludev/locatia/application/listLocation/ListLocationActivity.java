@@ -1,6 +1,7 @@
 package com.joseludev.locatia.application.listLocation;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,8 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.joseludev.locatia.R;
 import com.joseludev.locatia.application.listLocation.recyclerview.LocationListAdapter;
 import com.joseludev.locatia.application.newLocation.NewLocationActivity;
+import com.joseludev.locatia.domain.location.LocationManager;
 
-public class ListLocationActivity extends AppCompatActivity {
+public class ListLocationActivity extends AppCompatActivity implements LocationManager.LocationManagerHandler {
 
     private ListLocationViewModel listLocationViewModel;
     private LocationListAdapter adapter;
@@ -30,14 +32,9 @@ public class ListLocationActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        adapter = new LocationListAdapter(new LocationListAdapter.LocationDiff(), this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        LocationManager.getLocationCurrentCache(this);
 
         listLocationViewModel = new ListLocationViewModel(this.getApplication());
-
-        setRecyclerViewDefaultContent();
     }
 
     public void toNewLocationActivity(View view) {
@@ -82,5 +79,20 @@ public class ListLocationActivity extends AppCompatActivity {
 
     private void updateRecyclerViewByName(String name){
         listLocationViewModel.getLocationListByName(name).observe(this, locations -> adapter.submitList(locations));
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        adapter = new LocationListAdapter(new LocationListAdapter.LocationDiff(), this, location);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        setRecyclerViewDefaultContent();
+    }
+
+    @Override
+    public void onLocationPermissionDenied() {
+
     }
 }
