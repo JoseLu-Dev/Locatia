@@ -17,8 +17,9 @@ public class LocationListAdapter extends ListAdapter<LocationMinimal, LocationVi
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public LocationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return LocationViewHolder.create(parent, context);
     }
 
@@ -28,7 +29,7 @@ public class LocationListAdapter extends ListAdapter<LocationMinimal, LocationVi
         holder.bind(current.getName(), 0.0, current.getPhotoPath());
     }
 
-    public static class WordDiff extends DiffUtil.ItemCallback<LocationMinimal> {
+    public static class LocationDiff extends DiffUtil.ItemCallback<LocationMinimal> {
 
         @Override
         public boolean areItemsTheSame(@NonNull LocationMinimal oldItem, @NonNull LocationMinimal newItem) {

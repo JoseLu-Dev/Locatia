@@ -33,5 +33,7 @@
     <string name="ok">OK</string>
 
     <string name="more">More</string>
+    <string name="name_hint">Name</string>
+    <string name="search">Search</string>
 
 </resources>
