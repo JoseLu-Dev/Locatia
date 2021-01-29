@@ -19,9 +19,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
 import com.joseludev.locatia.R;
-import com.joseludev.locatia.application.categories.CategoriesDialogFragment;
-import com.joseludev.locatia.application.categories.CategorySelectionManager;
-import com.joseludev.locatia.application.categories.NewCategoryDialogFragment;
+import com.joseludev.locatia.application.dialogs.categories.CategoriesDialogFragment;
+import com.joseludev.locatia.application.dialogs.categories.CategorySelectionManager;
+import com.joseludev.locatia.application.dialogs.categories.NewCategoryDialogFragment;
 import com.joseludev.locatia.databinding.ActivityNewLocationActivityBinding;
 import com.joseludev.locatia.domain.location.LocationManager;
 import com.joseludev.locatia.domain.models.CategoryModel;

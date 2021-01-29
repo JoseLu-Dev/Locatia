@@ -1,4 +1,4 @@
-package com.joseludev.locatia.application.categories;
+package com.joseludev.locatia.application.dialogs.categories;
 
 import android.app.Activity;
 import android.app.AlertDialog;
