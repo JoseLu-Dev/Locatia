@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.joseludev.locatia.R;
 import com.joseludev.locatia.application.location.LocationActivity;
-import com.joseludev.locatia.domain.Tools.StringFormatter;
 import com.joseludev.locatia.domain.models.LocationModel;
 
 import java.io.File;
@@ -36,9 +35,9 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void bind(String name, Double distance, String photoPath) {
+    public void bind(String name, String distance, String photoPath) {
         textViewName.setText(name);
-        textViewDistance.setText(StringFormatter.distanceFormatter(distance));
+        textViewDistance.setText(distance);
         imageView.setImageURI(Uri.fromFile(new File(photoPath)));
     }
 

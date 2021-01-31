@@ -8,12 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
+import com.joseludev.locatia.domain.Tools.StringFormatter;
 import com.joseludev.locatia.domain.models.LocationMinimal;
 
 public class LocationListAdapter extends ListAdapter<LocationMinimal, LocationViewHolder> {
 
     private Activity activity;
     private Location currentLocation;
+
     public LocationListAdapter(@NonNull DiffUtil.ItemCallback<LocationMinimal> diffCallback, Activity activity, Location currentLocation) {
         super(diffCallback);
         this.activity = activity;
@@ -29,7 +31,11 @@ public class LocationListAdapter extends ListAdapter<LocationMinimal, LocationVi
     @Override
     public void onBindViewHolder(LocationViewHolder holder, int position) {
         LocationMinimal current = getItem(position);
-        holder.bind(current.getName(), current.getDistanceTo(currentLocation), current.getPhotoPath());
+        if (currentLocation != null) {
+            holder.bind(current.getName(), StringFormatter.distanceFormatter(current.getDistanceTo(currentLocation)), current.getPhotoPath());
+        } else {
+            holder.bind(current.getName(), "Unknown distance", current.getPhotoPath());
+        }
     }
 
     public static class LocationDiff extends DiffUtil.ItemCallback<LocationMinimal> {

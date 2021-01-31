@@ -35,6 +35,14 @@ public class ListLocationActivity extends AppCompatActivity implements LocationM
         LocationManager.getLocationCurrentCache(this);
 
         listLocationViewModel = new ListLocationViewModel(this.getApplication());
+
+        onLocationChanged(null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocationManager.getLocationCurrentCache(this);
     }
 
     public void toNewLocationActivity(View view) {
