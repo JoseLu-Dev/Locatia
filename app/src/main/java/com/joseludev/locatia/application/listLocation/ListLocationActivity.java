@@ -32,11 +32,11 @@ public class ListLocationActivity extends AppCompatActivity implements LocationM
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        LocationManager.getLocationCurrentCache(this);
-
         listLocationViewModel = new ListLocationViewModel(this.getApplication());
 
         onLocationChanged(null);
+
+        LocationManager.getLocationCurrentCache(this);
     }
 
     @Override
