@@ -22,4 +22,7 @@ public interface CategoryDao {
 
     @Query("SELECT * FROM category_table ORDER BY rowid DESC LIMIT 4")
     LiveData<List<CategoryModel>> getLastCategories();
+
+    @Query("SELECT l.category, count(*) FROM location_table as l group by l.category")
+    List<CategoryAndCountModel> getCategoriesAndCount();
 }

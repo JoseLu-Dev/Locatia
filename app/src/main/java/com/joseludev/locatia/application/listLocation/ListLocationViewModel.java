@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.joseludev.locatia.domain.database.LocationRoomDatabase;
+import com.joseludev.locatia.domain.models.CategoryDao;
+import com.joseludev.locatia.domain.models.CategoryModel;
 import com.joseludev.locatia.domain.models.LocationMinimal;
 
 import java.util.List;
@@ -20,11 +22,22 @@ public class ListLocationViewModel extends AndroidViewModel {
         db = LocationRoomDatabase.getDatabase(application);
     }
 
+    public LiveData<List<LocationMinimal>> getLocationListByCategory(CategoryModel categoryModel) {
+        return db.locationDao().getLocationsMinimalByCategory(categoryModel);
+    }
+
     public LiveData<List<LocationMinimal>> getLocationList() {
         return db.locationDao().getLocationsMinimal();
     }
 
     public LiveData<List<LocationMinimal>> getLocationListByName(String name) {
         return db.locationDao().getLocationsMinimalByName(name);
+    }
+
+    public void getCategoriesAndCount(ListLocationActivity listLocationActivity) {
+        CategoryDao categoryDao = db.categoryDao();
+        LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
+            listLocationActivity.onGetCategoriesAndCountQueryResult(categoryDao.getCategoriesAndCount());
+        });
     }
 }

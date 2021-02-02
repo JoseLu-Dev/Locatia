@@ -15,14 +15,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.joseludev.locatia.R;
+import com.joseludev.locatia.application.dialogs.categories.CategoriesCountDialogFragment;
+import com.joseludev.locatia.application.dialogs.categories.CategorySelectionManager;
 import com.joseludev.locatia.application.listLocation.recyclerview.LocationListAdapter;
 import com.joseludev.locatia.application.newLocation.NewLocationActivity;
 import com.joseludev.locatia.domain.location.LocationManager;
+import com.joseludev.locatia.domain.models.CategoryAndCountModel;
+import com.joseludev.locatia.domain.models.CategoryModel;
 
-public class ListLocationActivity extends AppCompatActivity implements LocationManager.LocationManagerHandler {
+import java.util.List;
+
+public class ListLocationActivity extends AppCompatActivity implements LocationManager.LocationManagerHandler, CategorySelectionManager {
 
     private ListLocationViewModel listLocationViewModel;
     private LocationListAdapter adapter;
+    private ListLocationActivity listLocationActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,7 @@ public class ListLocationActivity extends AppCompatActivity implements LocationM
         setSupportActionBar(myToolbar);
 
         listLocationViewModel = new ListLocationViewModel(this.getApplication());
+        listLocationActivity = this;
 
         onLocationChanged(null);
 
@@ -78,7 +86,20 @@ public class ListLocationActivity extends AppCompatActivity implements LocationM
             return false;
         });
 
+        MenuItem sortItem = menu.findItem(R.id.app_bar_sort);
+        sortItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                listLocationViewModel.getCategoriesAndCount(listLocationActivity);
+                return false;
+            }
+        });
+
         return true;
+    }
+
+    public void onGetCategoriesAndCountQueryResult(List<CategoryAndCountModel> categoryAndCountModelList){
+        CategoriesCountDialogFragment.newInstance(this, categoryAndCountModelList).show(getSupportFragmentManager(), "");
     }
 
     private void setRecyclerViewDefaultContent(){
@@ -87,6 +108,10 @@ public class ListLocationActivity extends AppCompatActivity implements LocationM
 
     private void updateRecyclerViewByName(String name){
         listLocationViewModel.getLocationListByName(name).observe(this, locations -> adapter.submitList(locations));
+    }
+
+    private void updateRecyclerViewByCategory(CategoryModel categoryModel){
+        listLocationViewModel.getLocationListByCategory(categoryModel).observe(this, locations -> adapter.submitList(locations));
     }
 
     @Override
@@ -102,5 +127,10 @@ public class ListLocationActivity extends AppCompatActivity implements LocationM
     @Override
     public void onLocationPermissionDenied() {
 
+    }
+
+    @Override
+    public void onCategorySelected(CategoryModel categoryModel) {
+        updateRecyclerViewByCategory(categoryModel);
     }
 }

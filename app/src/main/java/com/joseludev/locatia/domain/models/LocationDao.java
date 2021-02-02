@@ -20,6 +20,9 @@ public interface LocationDao {
     @Query("SELECT name, photoPath, latitude, longitude FROM location_table")
     LiveData<List<LocationMinimal>> getLocationsMinimal();
 
+    @Query("SELECT name, photoPath, latitude, longitude FROM location_table where category = :category")
+    LiveData<List<LocationMinimal>> getLocationsMinimalByCategory(CategoryModel category);
+
     @Query("SELECT name, photoPath, latitude, longitude FROM location_table where name like '%' || :name || '%'")
     LiveData<List<LocationMinimal>> getLocationsMinimalByName(String name);
 

@@ -35,5 +35,8 @@
     <string name="more">More</string>
     <string name="name_hint">Name</string>
     <string name="search">Search</string>
+    <string name="sort">Sort</string>
+    <string name="reset_app">Reset app</string>
+    <string name="location_number">Locations Nº</string>
 
 </resources>
