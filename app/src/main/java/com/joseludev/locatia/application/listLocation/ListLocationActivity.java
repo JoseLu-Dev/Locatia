@@ -87,12 +87,15 @@ public class ListLocationActivity extends AppCompatActivity implements LocationM
         });
 
         MenuItem sortItem = menu.findItem(R.id.app_bar_sort);
-        sortItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                listLocationViewModel.getCategoriesAndCount(listLocationActivity);
-                return false;
-            }
+        sortItem.setOnMenuItemClickListener(item -> {
+            listLocationViewModel.getCategoriesAndCount(listLocationActivity);
+            return false;
+        });
+
+        MenuItem resetItem = menu.findItem(R.id.app_bar_reset);
+        resetItem.setOnMenuItemClickListener(item -> {
+            listLocationViewModel.deleteTables();
+            return false;
         });
 
         return true;
