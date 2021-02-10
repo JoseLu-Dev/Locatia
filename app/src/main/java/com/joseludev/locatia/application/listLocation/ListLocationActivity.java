@@ -1,5 +1,6 @@
 package com.joseludev.locatia.application.listLocation;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -101,19 +103,34 @@ public class ListLocationActivity extends AppCompatActivity implements LocationM
         return true;
     }
 
-    public void onGetCategoriesAndCountQueryResult(List<CategoryAndCountModel> categoryAndCountModelList){
-        CategoriesCountDialogFragment.newInstance(this, categoryAndCountModelList).show(getSupportFragmentManager(), "");
+    public void onGetCategoriesAndCountQueryResult(List<CategoryAndCountModel> categoryAndCountModelList) {
+        if (categoryAndCountModelList.size() > 0) {
+            CategoriesCountDialogFragment.newInstance(this, categoryAndCountModelList).show(getSupportFragmentManager(), "");
+        }else{
+            Activity activity = this;
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("There isn't any location yet");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            (dialog, which) -> dialog.dismiss());
+                    alertDialog.show();
+                }
+            });
+        }
     }
 
-    private void setRecyclerViewDefaultContent(){
+    private void setRecyclerViewDefaultContent() {
         listLocationViewModel.getLocationList().observe(this, locations -> adapter.submitList(locations));
     }
 
-    private void updateRecyclerViewByName(String name){
+    private void updateRecyclerViewByName(String name) {
         listLocationViewModel.getLocationListByName(name).observe(this, locations -> adapter.submitList(locations));
     }
 
-    private void updateRecyclerViewByCategory(CategoryModel categoryModel){
+    private void updateRecyclerViewByCategory(CategoryModel categoryModel) {
         listLocationViewModel.getLocationListByCategory(categoryModel).observe(this, locations -> adapter.submitList(locations));
     }
 

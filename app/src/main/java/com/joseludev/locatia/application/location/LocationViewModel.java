@@ -17,7 +17,7 @@ import com.joseludev.locatia.domain.models.LocationModel;
 public class LocationViewModel extends AndroidViewModel {
 
     private LocationModel locationModel;
-    private  LocationRoomDatabase db;
+    private LocationRoomDatabase db;
 
     public LocationViewModel(@NonNull Application application, String locationName) {
         super(application);
