@@ -56,7 +56,7 @@ public class NewCategoryDialogFragment extends DialogFragment {
             LocationRoomDatabase db = LocationRoomDatabase.getDatabase(activity.getApplication());
             CategoryDao categoryDao = db.categoryDao();
             LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
-                categoryDao.insert(new CategoryModel(editTextCategory.getText().toString()));
+                categoryDao.insert(new CategoryModel(0, editTextCategory.getText().toString()));
             });
             this.dismiss();
         });

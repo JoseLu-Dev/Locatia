@@ -161,7 +161,7 @@ public class NewLocationViewModel extends AndroidViewModel {
     }
 
     public LocationModel getLocationItem() {
-        return new LocationModel(latitude, longitude, name, description, photoPath, category);
+        return new LocationModel(0, latitude, longitude, name, description, photoPath, category);
     }
 
     public void saveLocationOnDatabase(Application application) {

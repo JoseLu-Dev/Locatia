@@ -8,12 +8,15 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "category_table")
 public class CategoryModel {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     @NonNull
     @ColumnInfo(name = "category")
     private final String category;
 
-    public CategoryModel(@NonNull String category) {
+    public CategoryModel(int id, @NonNull String category) {
+        this.id = id;
         this.category = category;
     }
 
@@ -22,6 +25,11 @@ public class CategoryModel {
         return category;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    @NonNull
     @Override
     public String toString() {
         return category;

@@ -38,5 +38,6 @@
     <string name="sort">Sort</string>
     <string name="reset_app">Reset app</string>
     <string name="location_number">Locations Nº</string>
+    <string name="delete_location">Delete location</string>
 
 </resources>

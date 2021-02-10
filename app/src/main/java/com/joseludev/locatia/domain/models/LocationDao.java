@@ -17,6 +17,9 @@ public interface LocationDao {
     @Query("DELETE FROM location_table")
     void deleteAll();
 
+    @Query("DELETE FROM location_table where id = :locationModelID")
+    void deleteLocation(int locationModelID);
+
     @Query("SELECT name, photoPath, latitude, longitude FROM location_table")
     LiveData<List<LocationMinimal>> getLocationsMinimal();
 

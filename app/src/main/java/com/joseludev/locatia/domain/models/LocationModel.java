@@ -10,6 +10,9 @@ public class LocationModel {
 
     public static final String LOCATION_NAME = "locationName";
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     @NonNull
     @ColumnInfo(name = "latitude")
     private double latitude;
@@ -18,7 +21,6 @@ public class LocationModel {
     @ColumnInfo(name = "longitude")
     private double longitude;
 
-    @PrimaryKey
     @NonNull
     @ColumnInfo(name = "name")
     private String name;
@@ -31,11 +33,11 @@ public class LocationModel {
     @ColumnInfo(name = "photoPath")
     private String photoPath;
 
-
     @ColumnInfo(name = "category")
     private CategoryModel categoryModel;
 
-    public LocationModel(double latitude, double longitude, String name, String description, String photoPath, CategoryModel categoryModel) {
+    public LocationModel(int id, double latitude, double longitude, @NonNull String name, @NonNull String description, @NonNull String photoPath, CategoryModel categoryModel) {
+        this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
@@ -66,5 +68,9 @@ public class LocationModel {
 
     public CategoryModel getCategoryModel() {
         return categoryModel;
+    }
+
+    public int getId() {
+        return id;
     }
 }

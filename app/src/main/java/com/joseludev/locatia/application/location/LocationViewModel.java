@@ -17,10 +17,11 @@ import com.joseludev.locatia.domain.models.LocationModel;
 public class LocationViewModel extends AndroidViewModel {
 
     private LocationModel locationModel;
+    private  LocationRoomDatabase db;
 
     public LocationViewModel(@NonNull Application application, String locationName) {
         super(application);
-        LocationRoomDatabase db = LocationRoomDatabase.getDatabase(application);
+        db = LocationRoomDatabase.getDatabase(application);
         LocationDao locationDao = db.locationDao();
         LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
             locationModel = locationDao.getLocationSingle(locationName);
@@ -33,6 +34,13 @@ public class LocationViewModel extends AndroidViewModel {
 
     public void setLocationModel(LocationModel locationModel) {
         this.locationModel = locationModel;
+    }
+
+    public void deleteLocation(){
+        LocationDao locationDao = db.locationDao();
+        LocationRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
+            locationDao.deleteLocation(locationModel.getId());
+        });
     }
 
     public void openInMaps(Context context) {
