@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import com.joseludev.locatia.domain.Tools.StringFormatter;
 import com.joseludev.locatia.domain.models.LocationMinimal;
+import com.joseludev.locatia.domain.tools.StringFormatter;
 
 public class LocationListAdapter extends ListAdapter<LocationMinimal, LocationViewHolder> {
 

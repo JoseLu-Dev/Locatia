@@ -1,4 +1,4 @@
-package com.joseludev.locatia.domain.Tools;
+package com.joseludev.locatia.domain.tools;
 
 public class StringFormatter {
     public static String distanceFormatter(double distanceKm){
