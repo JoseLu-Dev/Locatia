@@ -18,7 +18,7 @@ import com.joseludev.locatia.domain.models.LocationModel;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {LocationModel.class, CategoryModel.class}, version = 1, exportSchema = false)
+@Database(entities = {LocationModel.class, CategoryModel.class}, version = 2, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class LocationRoomDatabase extends RoomDatabase {
     public abstract LocationDao locationDao();
@@ -42,6 +42,7 @@ public abstract class LocationRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             LocationRoomDatabase.class, "location_database").addCallback(sRoomDatabaseCallback)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
