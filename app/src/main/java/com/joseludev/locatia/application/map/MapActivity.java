@@ -39,22 +39,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final String ICON_ID = "ICON_ID";
     private static final String LAYER_ID = "LAYER_ID";
 
-    double latitude;
-    double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        latitude = getIntent().getExtras().getDouble("latitude");
-        longitude = getIntent().getExtras().getDouble("longitude");
+        mapViewModel = new MapViewModel(this.getApplication(),
+                getIntent().getExtras().getDouble("latitude"),
+                getIntent().getExtras().getDouble("longitude"));
 
         Mapbox.getInstance(this, getString(R.string.mapbox_access_token));
 
         MapboxMapOptions options = MapboxMapOptions.createFromAttributes(this, null)
                 .camera(new CameraPosition.Builder()
-                        .target(new LatLng(latitude, longitude))
-                        .zoom(15)
+                        .target(new LatLng(mapViewModel.getLatitude(), mapViewModel.getLongitude()))
+                        .zoom(10)
                         .build());
 
         // create map
@@ -69,7 +68,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         List<Feature> symbolLayerIconFeatureList = new ArrayList<>();
         symbolLayerIconFeatureList.add(Feature.fromGeometry(
-                Point.fromLngLat(longitude, latitude)));
+                Point.fromLngLat(mapViewModel.getLongitude(), (mapViewModel.getLatitude()))));
 
         mapboxMap.setStyle(new Style.Builder().fromUri(getMapStyle())
 

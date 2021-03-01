@@ -7,7 +7,19 @@ import androidx.lifecycle.AndroidViewModel;
 
 public class MapViewModel extends AndroidViewModel {
 
-    public MapViewModel(@NonNull Application application) {
+    private double latitude, longitude;
+
+    public MapViewModel(@NonNull Application application, double latitude, double longitude) {
         super(application);
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 }
