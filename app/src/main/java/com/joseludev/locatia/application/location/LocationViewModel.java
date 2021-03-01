@@ -1,5 +1,6 @@
 package com.joseludev.locatia.application.location;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.joseludev.locatia.application.map.MapActivity;
 import com.joseludev.locatia.domain.database.LocationRoomDatabase;
 import com.joseludev.locatia.domain.models.LocationDao;
 import com.joseludev.locatia.domain.models.LocationModel;
@@ -43,15 +45,23 @@ public class LocationViewModel extends AndroidViewModel {
         });
     }
 
-    public void openInMaps(Context context) {
+    @SuppressLint("QueryPermissionsNeeded")
+    public void openInGoogleMaps(Context context) {
         Uri gmmIntentUri = Uri.parse("geo:0,0"
                 + "?q=" + locationModel.getLatitude() + "," + locationModel.getLongitude()
                 + "(" + locationModel.getName() + ")");
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(mapIntent);
+        Intent googleMapsIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        googleMapsIntent.setPackage("com.google.android.apps.maps");
+        if (googleMapsIntent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(googleMapsIntent);
         }
+    }
+
+    public void openInMap(Context context){
+        Intent mapIntent = new Intent(context, MapActivity.class);
+        mapIntent.putExtra("latitude", locationModel.getLatitude());
+        mapIntent.putExtra("longitude", locationModel.getLongitude());
+        context.startActivity(mapIntent);
     }
 
     @BindingAdapter("src")

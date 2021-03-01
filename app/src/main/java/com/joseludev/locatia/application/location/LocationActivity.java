@@ -34,7 +34,8 @@ public class LocationActivity extends AppCompatActivity {
     }
 
     public void openInMapsButton(View view){
-        locationViewModel.openInMaps(this);
+        //locationViewModel.openInGoogleMaps(this);
+        locationViewModel.openInMap(this);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

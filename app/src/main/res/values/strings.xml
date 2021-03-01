@@ -40,4 +40,6 @@
     <string name="location_number">Locations Nº</string>
     <string name="delete_location">Delete location</string>
 
+    <string name="mapbox_access_token">pk.eyJ1Ijoiam9zZWx1LWRldiIsImEiOiJja2lqaXkxYmIwMGVhMnNtd2RzYXByaDJpIn0.f8iZsFU_u066t_0nCEN_Mg</string>
+
 </resources>
