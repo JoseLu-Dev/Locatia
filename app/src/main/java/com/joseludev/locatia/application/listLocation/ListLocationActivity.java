@@ -3,6 +3,7 @@ package com.joseludev.locatia.application.listLocation;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +41,9 @@ public class ListLocationActivity extends AppCompatActivity implements LocationM
         setContentView(R.layout.activity_list_location);
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.start_sound);
+        mediaPlayer.start();
 
         listLocationViewModel = new ListLocationViewModel(this.getApplication());
         listLocationActivity = this;
