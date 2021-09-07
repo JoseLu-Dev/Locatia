@@ -75,4 +75,4 @@ Project Link: [https://github.com/joselu-dev/AndroidLocationApp](https://github.
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://es.linkedin.com/in/jose-luis-alfaro-carretero-0a5912208/es
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: resources/images/main_activity.jpg
